@@ -401,7 +401,11 @@ class EventsExtension extends \Nette\DI\CompilerExtension
 			if (!preg_match('#^on[A-Z]#', $name)) {
 				continue;
 			}
-
+			if($property->getType() !== null) {
+				if ($property->getType()->getName() === 'array') {
+					continue;
+				}
+			}
 			if (self::propertyHasAnnotation($property, 'persistent') || self::propertyHasAnnotation($property, 'inject')) { // definitely not an event
 				continue;
 			}
